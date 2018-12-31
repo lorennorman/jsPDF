@@ -5,8 +5,8 @@
 
   /** @license
    * jsPDF - PDF Document creation from JavaScript
-   * Version 1.5.3 Built on 2018-12-31T14:29:38.751Z
-   *                      CommitID 78d94b8570
+   * Version 1.5.3 Built on 2018-12-31T14:56:37.692Z
+   *                      CommitID 5e1b12df06
    *
    * Copyright (c) 2010-2016 James Hall <james@parall.ax>, https://github.com/MrRio/jsPDF
    *               2010 Aaron Spike, https://github.com/acspike
@@ -14039,7 +14039,7 @@
           if (current_word_length > maxlen) {
             // this happens when you have space-less long URLs for example.
             // we just chop these to size. We do NOT insert hiphens
-            tmp = splitLongWord.apply(this, [word, widths_array, maxlen - (line_length + separator_length), maxlen]); // first line we add to existing line object
+            tmp = API.splitLongWord.apply(this, [word, widths_array, maxlen - (line_length + separator_length), maxlen]); // first line we add to existing line object
 
             line.push(tmp.shift()); // it's ok to have extra space indicator there
             // last line we make into new line object

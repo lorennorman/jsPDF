@@ -227,7 +227,7 @@
         if (current_word_length > maxlen) {
           // this happens when you have space-less long URLs for example.
           // we just chop these to size. We do NOT insert hiphens
-          tmp = splitLongWord.apply(this, [word, widths_array, maxlen - (line_length + separator_length), maxlen]);
+          tmp = API.splitLongWord.apply(this, [word, widths_array, maxlen - (line_length + separator_length), maxlen]);
           // first line we add to existing line object
           line.push(tmp.shift()) // it's ok to have extra space indicator there
           // last line we make into new line object
