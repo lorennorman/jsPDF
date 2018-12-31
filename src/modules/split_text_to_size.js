@@ -24,10 +24,10 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * ====================================================================
  */
- 
+
 /**
-* jsPDF split_text_to_size plugin 
-* 
+* jsPDF split_text_to_size plugin
+*
 * @name split_text_to_size
 * @module
 */
@@ -36,7 +36,7 @@
   /**
    * Returns an array of length matching length of the 'word' string, with each
    * cell occupied by the width of the char in that position.
-   * 
+   *
    * @name getCharWidthsArray
    * @function
    * @param {string} text
@@ -45,11 +45,11 @@
    */
   var getCharWidthsArray = API.getCharWidthsArray = function (text, options) {
     options = options || {};
-  
+
     var activeFont = options.font || this.internal.getFont();
     var fontSize = options.fontSize || this.internal.getFontSize();
     var charSpace = options.charSpace || this.internal.getCharSpace();
-    
+
     var widths = options.widths ? options.widths : activeFont.metadata.Unicode.widths;
     var widthsFractionOf = widths.fof ? widths.fof : 1;
     var kerning = options.kerning ? options.kerning : activeFont.metadata.Unicode.kerning;
@@ -77,19 +77,37 @@
         }
         prior_char_code = char_code;
     }
-  
+
     return output;
   }
 
+  /**
+   * Calculate the sum of a number-array
+   *
+   * @name getArraySum
+   * @public
+   * @function
+   * @param {Array} array Array of numbers
+   * @returns {number}
+   */
+  var getArraySum = API.getArraySum = function (array) {
+    var i = array.length,
+      output = 0;
+    while (i) {;
+      i--;
+      output += array[i];
+    }
+    return output;
+  }
   /**
   * Returns a widths of string in a given font, if the font size is set as 1 point.
   *
   * In other words, this is "proportional" value. For 1 unit of font size, the length
   * of the string will be that much.
-  * 
+  *
   * Multiply by font size to get actual width in *points*
   * Then divide by 72 to get inches or divide by (72/25.6) to get 'mm' etc.
-  * 
+  *
   * @name getStringUnitWidth
   * @public
   * @function
@@ -120,7 +138,7 @@
   /**
   returns array of lines
   */
-  var splitLongWord = function (word, widths_array, firstLineMaxLen, maxLen) {
+  var splitLongWord = API.splitLongWord = function (word, widths_array, firstLineMaxLen, maxLen) {
     var answer = []
 
     // 1st, chop off the piece that can fit on the hanging line.
@@ -155,7 +173,7 @@
 
   // Note, all sizing inputs for this function must be in "font measurement units"
   // By default, for PDF, it's "point".
-  var splitParagraphIntoLines = function (text, maxlen, options) {
+  var splitParagraphIntoLines = API.splitParagraphIntoLines = function (text, maxlen, options) {
     // at this time works only on Western scripts, ones with space char
     // separating the words. Feel free to expand.
 
@@ -256,10 +274,10 @@
   * (in measurement units declared as default for the jsPDF instance)
   * and the font's "widths" and "Kerning" tables, where available, to
   * determine display length of a given string for a given font.
-  * 
+  *
   * We use character's 100% of unit size (height) as width when Width
   * table or other default width is not available.
-  * 
+  *
   * @name splitTextToSize
   * @public
   * @function
@@ -270,7 +288,7 @@
   */
   API.splitTextToSize = function (text, maxlen, options) {
     'use strict'
-    
+
     options = options || {};
 
     var fsize = options.fontSize || this.internal.getFontSize(),
