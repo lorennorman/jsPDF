@@ -216,6 +216,9 @@
 
       if (line_length + separator_length + current_word_length > maxlen || force) {
         if (current_word_length > maxlen) {
+          if(options.throwOnWordSplit) {
+            throw new Error("Splitting a word")
+          }
           // this happens when you have space-less long URLs for example.
           // we just chop these to size. We do NOT insert hiphens
           tmp = API.splitLongWord.apply(this, [word, widths_array, maxlen - (line_length + separator_length), maxlen]);
@@ -345,6 +348,7 @@
       options.textIndent * 1.0 * this.internal.scaleFactor / fsize :
       0
     newOptions.lineIndent = options.lineIndent;
+    newOptions.throwOnWordSplit = options.throwOnWordSplit;
 
     var i, l, output = []
     for (i = 0, l = paragraphs.length; i < l; i++) {
